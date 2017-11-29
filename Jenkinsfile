@@ -7,7 +7,7 @@ node('windows-slave') {
 
   //Set when to trigger scan for changes on repo
    triggers { 
-     pollSCM('H/5 * * * *') 
+     pollSCM('H/5 * * * *') //Set reasonable update time here. We will investigate how to use server side git hook instead of polling
    }
 
    try {        
@@ -36,8 +36,8 @@ node('windows-slave') {
 
         stage('Upload') {
 
-          sh 'fastlane deploy_nexus'
-          sh 'fastlane deploy_testfairy' //use testers_groups and notify parameter to notify right testers group for boon pöanet
+          sh 'fastlane deploy_nexus' //investigate best way to upload to nexus, there are also jenkins plugins for this
+          sh 'fastlane deploy_testfairy' //Existing fastlane action, use testers_groups and notify parameter to notify right testers group for boon pöanet
         }
 
         stage('SeeTest') {
