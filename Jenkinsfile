@@ -17,27 +17,26 @@ node('windows-slave') {
         }
 
         stage('Setup') {
-          //unlock keychain etc
-          //carthage dependencies
+          //initial setup, manage dependencies etc
         }
 
         stage('Linting') {
-          sh 'fastlane lint' //using swiftlint
+          //executing liting here
         }
 
         stage('Build') {
-
+          //call to gradle to build flavor here
         }
 
         stage('Unit Tests') {
-          sh 'fastlane test'
+          //trigger unit test here
+          //publish unit test report to jenkins using 
+           //junit 'test_output/report.junit'
         }
 
 
         stage('Upload') {
-
-          sh 'fastlane deploy_nexus' //investigate best way to upload to nexus, there are also jenkins plugins for this
-          sh 'fastlane deploy_testfairy' //Existing fastlane action, use testers_groups and notify parameter to notify right testers group for boon pöanet
+          //use gradle or nexus plugin to upload to TF here
         }
 
         stage('SeeTest') {
@@ -52,6 +51,7 @@ node('windows-slave') {
         }
 
   } catch (e) {
+    //example send email/slack notification etc here
     slackSend channel: '#ios', color: 'danger', message: ":dizzy_face: Build failed ${env.JOB_NAME} (${env.BUILD_NUMBER})\n${env.BUILD_URL}"
     echo 'Stage Failed!!!'
     
